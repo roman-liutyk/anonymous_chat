@@ -1,6 +1,6 @@
 
-import 'package:anonymous_chat/widgets/custom_button.dart';
-import 'package:anonymous_chat/widgets/custom_text_form_field.dart';
+import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
+import 'package:anonymous_chat/presentation/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPageAccountForm extends StatefulWidget {

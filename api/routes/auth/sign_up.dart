@@ -38,9 +38,9 @@ Future<Response> _onPost(RequestContext context) async {
       ),
     );
 
-    return Response(
+    return Response.json(
       statusCode: 201,
-      body: token,
+      body: {'token': token},
     );
   } on AuthException catch (e) {
     return Response(statusCode: e.code);

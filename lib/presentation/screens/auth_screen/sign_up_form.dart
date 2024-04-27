@@ -1,22 +1,21 @@
-import 'package:anonymous_chat/repositories/auth_repository.dart';
-import 'package:anonymous_chat/screens/main_screen/main_screen.dart';
-import 'package:anonymous_chat/widgets/custom_button.dart';
-import 'package:anonymous_chat/widgets/custom_text_form_field.dart';
+import 'package:anonymous_chat/presentation/screens/main_screen/main_screen.dart';
+import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
+import 'package:anonymous_chat/presentation/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({super.key,
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({
+    super.key,
     this.switchForm,
   });
 
   final void Function()? switchForm;
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailTextFormController = TextEditingController();
   final _passwordTextFormController = TextEditingController();
@@ -32,7 +31,7 @@ class _SignInFormState extends State<SignInForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Sign In',
+                'Registration',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w500,
@@ -41,7 +40,7 @@ class _SignInFormState extends State<SignInForm> {
               TextButton(
                 onPressed: widget.switchForm,
                 child: const Text(
-                  'Registration',
+                  'Sign In',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -78,15 +77,14 @@ class _SignInFormState extends State<SignInForm> {
           ),
           const SizedBox(height: 20),
           CustomButton(
-            text: 'Sign in',
+            text: 'Sign up',
             onPressed: () {
-              // TODO sign in
-              // if (_formKey.currentState!.validate()) {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(builder: (context) => const MainScreen()),
-                // );
-                AuthRepository().signIn(email: 'example@gmail.com', password: '12345678');
-              // }
+              // TODO sign up
+              if (_formKey.currentState!.validate()) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                );
+              }
             },
           ),
         ],

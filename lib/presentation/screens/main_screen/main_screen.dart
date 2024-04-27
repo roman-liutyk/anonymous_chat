@@ -1,5 +1,5 @@
-import 'package:anonymous_chat/screens/main_screen/pages/main_page.dart';
-import 'package:anonymous_chat/screens/main_screen/pages/settings_page.dart';
+import 'package:anonymous_chat/presentation/screens/main_screen/pages/main_page.dart';
+import 'package:anonymous_chat/presentation/screens/main_screen/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {

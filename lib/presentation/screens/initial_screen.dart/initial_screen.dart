@@ -1,5 +1,5 @@
-import 'package:anonymous_chat/screens/auth_screen/auth_screen.dart';
-import 'package:anonymous_chat/screens/main_screen/main_screen.dart';
+import 'package:anonymous_chat/presentation/screens/auth_screen/auth_screen.dart';
+import 'package:anonymous_chat/presentation/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class InitialScreen extends StatelessWidget {

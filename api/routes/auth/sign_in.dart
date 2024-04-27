@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
@@ -18,14 +17,20 @@ Future<Response> onRequest(RequestContext context) async {
 
 Future<Response> _onPost(RequestContext context) async {
   try {
-    final body = await context.request.json() as Map<String, dynamic>;
-    log(body.toString());
+    final body = (await context.request.json()) as Map<String, dynamic>;
+
+    final email = body['email'] as String?;
+    final password = body['password'] as String?;
+
+    if (email == null || password == null) {
+      return Response(statusCode: 401);
+    }
 
     final authService = context.read<AuthService>();
 
     final user = await authService.signIn(
-      body['email'] as String,
-      body['password'] as String,
+      email,
+      password,
     );
 
     final jwt = JWT({

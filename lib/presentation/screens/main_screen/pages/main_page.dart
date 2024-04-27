@@ -1,5 +1,5 @@
-import 'package:anonymous_chat/screens/chat_screen.dart/chat_screen.dart';
-import 'package:anonymous_chat/widgets/custom_button.dart';
+import 'package:anonymous_chat/presentation/screens/chat_screen.dart/chat_screen.dart';
+import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {

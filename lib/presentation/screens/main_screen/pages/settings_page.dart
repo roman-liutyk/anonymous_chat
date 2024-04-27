@@ -1,5 +1,5 @@
-import 'package:anonymous_chat/screens/main_screen/pages/settings_page_account_form.dart';
-import 'package:anonymous_chat/widgets/custom_button.dart';
+import 'package:anonymous_chat/presentation/screens/main_screen/pages/settings_page_account_form.dart';
+import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:anonymous_chat/screens/auth_screen/sign_in_form.dart';
-import 'package:anonymous_chat/screens/auth_screen/sign_up_form.dart';
+import 'package:anonymous_chat/presentation/screens/auth_screen/sign_in_form.dart';
+import 'package:anonymous_chat/presentation/screens/auth_screen/sign_up_form.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
