@@ -1,7 +1,9 @@
+import 'package:anonymous_chat/repositories/auth_repository.dart';
 import 'package:anonymous_chat/screens/main_screen/main_screen.dart';
 import 'package:anonymous_chat/widgets/custom_button.dart';
 import 'package:anonymous_chat/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key,
@@ -79,11 +81,12 @@ class _SignInFormState extends State<SignInForm> {
             text: 'Sign in',
             onPressed: () {
               // TODO sign in
-              if (_formKey.currentState!.validate()) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MainScreen()),
-                );
-              }
+              // if (_formKey.currentState!.validate()) {
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(builder: (context) => const MainScreen()),
+                // );
+                AuthRepository().signIn(email: 'example@gmail.com', password: '12345678');
+              // }
             },
           ),
         ],

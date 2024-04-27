@@ -7,7 +7,13 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
+  crypto: ^3.0.3
   dart_frog: ^1.0.0
+  dart_frog_auth: ^1.1.0
+  dart_jsonwebtoken: ^2.14.0
+  firedart: ^0.9.8
+  username_gen: ^1.0.4
+  uuid: ^4.4.0
 
 dev_dependencies:
   mocktail: ^1.0.0
