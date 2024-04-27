@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "298526595215",
+    "project_id": "anonymous-chat-hackathon",
+    "storage_bucket": "anonymous-chat-hackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298526595215:android:3838e063e2bbdefdbbf8fa",
+        "android_client_info": {
+          "package_name": "com.example.anonymous_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSOQ3Vn277pr8HVjnxuzlw_LOwZe1zdhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
