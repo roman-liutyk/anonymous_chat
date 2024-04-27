@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:api/services/auth_service.dart';
@@ -16,6 +17,7 @@ Future<Response> onRequest(RequestContext context) async {
 Future<Response> _onPost(RequestContext context) async {
   try {
     final body = await context.request.json() as Map<String, dynamic>;
+    log(body.toString());
 
     final authService = context.read<AuthService>();
 
@@ -26,8 +28,8 @@ Future<Response> _onPost(RequestContext context) async {
 
     final token = JwtHelper.signJWT(user);
 
-    return Response(
-      body: token,
+    return Response.json(
+      body: {'token': token},
     );
   } on AuthException catch (e) {
     return Response(statusCode: e.code);

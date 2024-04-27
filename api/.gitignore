@@ -7,10 +7,12 @@
 .dart_tool/
 .packages
 pubspec.lock
+env.dart
 
 # Files and directories created by dart_frog
 build/
 .dart_frog
+
 
 # Test related files
 coverage/
