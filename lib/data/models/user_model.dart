@@ -1,3 +1,5 @@
+import 'package:anonymous_chat/domain/entities/user.dart';
+
 class UserModel {
   const UserModel({
     required this.id,
@@ -27,5 +29,23 @@ class UserModel {
       'email': email,
       'password': password,
     };
+  }
+
+  User toUser() {
+    return User(
+      id: id,
+      username: username,
+      email: email,
+      password: password,
+    );
+  }
+
+  factory UserModel.fromUser(User user) {
+    return UserModel(
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    );
   }
 }

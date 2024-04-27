@@ -18,6 +18,7 @@ class _ChatScreenState extends State<ChatScreen> {
       senderId: '1',
       createdAt: DateTime.now(),
       content: 'sdfsdf',
+      senderUsername: 'sdfds',
     ),
     MessageModel(
       id: '2',
@@ -25,6 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
       senderId: '1',
       createdAt: DateTime.now(),
       content: 'sdfssdfsdddddddddddfsdfdf',
+      senderUsername: 'sdfds',
     ),
     MessageModel(
       id: '3',
@@ -32,6 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
       senderId: '2',
       createdAt: DateTime.now(),
       content: 'sdffsdfdsfsfsdf',
+      senderUsername: 'sdfds',
     ),
     MessageModel(
       id: '5',
@@ -39,6 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
       senderId: '2',
       createdAt: DateTime.now(),
       content: 'sdffsdfdsfsfsdffffffffffffffffffffsdf',
+      senderUsername: 'sdfds',
     ),
     MessageModel(
       id: '6',
@@ -46,6 +50,7 @@ class _ChatScreenState extends State<ChatScreen> {
       senderId: '1',
       createdAt: DateTime.now(),
       content: 'sdffsdfdsfsfsdf',
+      senderUsername: 'sdfds',
     ),
   ];
 

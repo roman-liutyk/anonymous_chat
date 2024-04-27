@@ -1,12 +1,13 @@
-import 'package:anonymous_chat/data/repositories/api_auth_repository.dart';
-import 'package:anonymous_chat/presentation/screens/main_screen/main_screen.dart';
+import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_event.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({super.key,
+  const SignInForm({
+    super.key,
     this.switchForm,
   });
 
@@ -80,14 +81,12 @@ class _SignInFormState extends State<SignInForm> {
           CustomButton(
             text: 'Sign in',
             onPressed: () {
-              // TODO sign in
-              // if (_formKey.currentState!.validate()) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MainScreen()),
-                );
-                // AuthRepository(client: Client()).signIn(email: 'example@gmail.com', password: '12345678');
-                // AuthRepository(client: Client()).signUp(email: 'test@gmail.com', password: '12345678');
-              // }
+              if (_formKey.currentState!.validate()) {
+                BlocProvider.of<AuthBloc>(context).add(AuthEventSignIn(
+                  email: _emailTextFormController.text,
+                  password: _passwordTextFormController.text,
+                ));
+              }
             },
           ),
         ],

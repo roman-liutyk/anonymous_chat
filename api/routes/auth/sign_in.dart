@@ -1,10 +1,8 @@
 import 'dart:io';
 
+import 'package:api/services/auth_service.dart';
+import 'package:api/utils/jwt_helper.dart';
 import 'package:dart_frog/dart_frog.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-
-import '../../env.dart';
-import '../../services/auth_service.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
@@ -17,7 +15,9 @@ Future<Response> onRequest(RequestContext context) async {
 
 Future<Response> _onPost(RequestContext context) async {
   try {
-    final body = (await context.request.json()) as Map<String, dynamic>;
+    final request = context.request;
+
+    final body = await request.json() as Map<String, dynamic>;
 
     final email = body['email'] as String?;
     final password = body['password'] as String?;
@@ -33,22 +33,15 @@ Future<Response> _onPost(RequestContext context) async {
       password,
     );
 
-    final jwt = JWT({
-      'id': user.id,
-      'email': user.email,
-      'username': user.username,
-    });
-
-    final token = jwt.sign(
-      SecretKey(
-        EnvVariables.secretKey,
-      ),
-    );
+    final token = JwtHelper.signJWT(user);
 
     return Response.json(
-      body: {'token': token},
+      body: {
+        'token': token,
+        'id': user.id,
+      },
     );
-  } on AuthException catch (e) {
+  } on CustomException catch (e) {
     return Response(statusCode: e.code);
   } catch (e) {
     return Response(statusCode: 500);

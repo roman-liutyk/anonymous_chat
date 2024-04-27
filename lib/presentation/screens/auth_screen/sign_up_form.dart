@@ -1,7 +1,9 @@
-import 'package:anonymous_chat/presentation/screens/main_screen/main_screen.dart';
+import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_event.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({
@@ -79,11 +81,11 @@ class _SignUpFormState extends State<SignUpForm> {
           CustomButton(
             text: 'Sign up',
             onPressed: () {
-              // TODO sign up
               if (_formKey.currentState!.validate()) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MainScreen()),
-                );
+                BlocProvider.of<AuthBloc>(context).add(AuthEventSignUp(
+                  email: _emailTextFormController.text,
+                  password: _passwordTextFormController.text,
+                ));
               }
             },
           ),

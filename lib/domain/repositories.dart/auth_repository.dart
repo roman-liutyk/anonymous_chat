@@ -1,18 +1,19 @@
+import 'package:anonymous_chat/domain/entities/user_auth_response.dart';
+
 abstract class AuthRepository {
-  Future<String> signIn({
+  Future<bool> isUserAuthorized();
+
+  Future<UserAuthResponse> signIn({
     required String email,
     required String password,
   });
 
-  Future<String> signUp({
+  Future<UserAuthResponse> signUp({
     required String email,
     required String password,
   });
 
-  Future<void> deleteUser();
+  Future<void> signOut();
 
-  Future<void> updateUserData({
-    required String username,
-    required String email,
-  });
+  Future<void> deleteAccount();
 }

@@ -1,26 +1,45 @@
 import 'dart:convert';
+import 'package:anonymous_chat/core/app_constants.dart';
+import 'package:anonymous_chat/core/erorrs/auth_exception.dart';
+import 'package:anonymous_chat/core/services/secure_storage_service.dart';
+import 'package:anonymous_chat/domain/entities/user_auth_response.dart';
 import 'package:anonymous_chat/domain/repositories.dart/auth_repository.dart';
 import 'package:http/http.dart';
 
 class ApiAuthRepository implements AuthRepository {
   ApiAuthRepository({
     required Client client,
-  }) : _client = client;
+    required SecureSotrageService secureStorage,
+  })  : _client = client,
+        _secureStorage = secureStorage;
 
   final Client _client;
-  final String _host = '10.0.2.2:8080';
-  final String _signInPath = '/auth/sign_in';
-  final String _signUpPath = '/auth/sign_up';
+  final SecureSotrageService _secureStorage;
+
+  String? _userToken;
+  String? _userId;
 
   @override
-  Future<String> signIn({
+  Future<bool> isUserAuthorized() async {
+    _userToken ??= await _secureStorage.getUserToken();
+    _userId ??= await _secureStorage.getUserId();
+
+    if (_userToken != null && _userId != null) {
+      return Future.value(true);
+    }
+
+    return false;
+  }
+
+  @override
+  Future<UserAuthResponse> signIn({
     required String email,
     required String password,
   }) async {
     try {
       final uri = Uri.http(
-        _host,
-        _signInPath,
+        AppConstants.host,
+        AppConstants.signInPath,
       );
 
       final Response response = await _client.post(
@@ -31,25 +50,36 @@ class ApiAuthRepository implements AuthRepository {
         }),
       );
 
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body)['token'];
-      }
+      switch(response.statusCode) {
+        case 200:
+          final UserAuthResponse userAuthResponse = UserAuthResponse.fromJson(
+            jsonDecode(response.body),
+          );
 
-      throw Exception('wrong status code');
+          await _secureStorage.setUserId(userId: userAuthResponse.id);
+          await _secureStorage.setUserToken(userToken: userAuthResponse.token);
+          return userAuthResponse;
+        case 401:
+          throw AuthExceptionWrongPassword();
+        case 404:
+          throw AuthExceptionUserDoesNotExist();
+        default:
+          throw AuthException();
+      }
     } catch (exception) {
-      throw Exception(exception);
+      rethrow;
     }
   }
 
   @override
-  Future<String> signUp({
+  Future<UserAuthResponse> signUp({
     required String email,
     required String password,
   }) async {
     try {
       final uri = Uri.http(
-        _host,
-        _signUpPath,
+        AppConstants.host,
+        AppConstants.signUpPath,
       );
 
       final Response response = await _client.post(
@@ -60,28 +90,35 @@ class ApiAuthRepository implements AuthRepository {
         }),
       );
 
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body)['token'];
-      }
+      switch(response.statusCode) {
+        case 201:
+          final UserAuthResponse userAuthResponse = UserAuthResponse.fromJson(
+            jsonDecode(response.body),
+          );
 
-      throw Exception('wrong status code');
+          await _secureStorage.setUserId(userId: userAuthResponse.id);
+          await _secureStorage.setUserToken(userToken: userAuthResponse.token);
+          return userAuthResponse;
+        case 409:
+          throw AuthExceptionUserAlreadyExists();
+        default:
+          throw AuthException();
+      }
     } catch (exception) {
-      throw Exception(exception);
+      rethrow;
     }
   }
 
   @override
-  Future<void> deleteUser() {
+  Future<void> signOut() async {
+    await _secureStorage.clearAllData();
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    await _secureStorage.clearAllData();
+
     // TODO: implement deleteUser
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> updateUserData({
-    required String username,
-    required String email,
-  }) {
-    // TODO: implement updateUserData
     throw UnimplementedError();
   }
 }
