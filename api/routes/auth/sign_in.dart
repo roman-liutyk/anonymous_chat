@@ -1,10 +1,8 @@
 import 'dart:io';
 
+import 'package:api/services/auth_service.dart';
+import 'package:api/utils/jwt_helper.dart';
 import 'package:dart_frog/dart_frog.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-
-import '../../env.dart';
-import '../../services/auth_service.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
@@ -26,17 +24,7 @@ Future<Response> _onPost(RequestContext context) async {
       body['password'] as String,
     );
 
-    final jwt = JWT({
-      'id': user.id,
-      'email': user.email,
-      'username': user.username,
-    });
-
-    final token = jwt.sign(
-      SecretKey(
-        EnvVariables.secretKey,
-      ),
-    );
+    final token = JwtHelper.signJWT(user);
 
     return Response(
       body: token,
