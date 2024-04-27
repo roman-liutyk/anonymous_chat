@@ -20,13 +20,13 @@ class AuthService {
     final docs = await users.where('email', isEqualTo: email).get();
 
     if (docs.isEmpty) {
-      throw const AuthException(code: 404);
+      throw const CustomException(code: 404);
     }
 
     final user = UserModel.fromJson(docs.first.map);
 
     if (password.encrypt != user.password) {
-      throw const AuthException(code: 401);
+      throw const CustomException(code: 401);
     }
 
     return user;
@@ -39,7 +39,7 @@ class AuthService {
         (await users.where('email', isEqualTo: email).get()).isNotEmpty;
 
     if (userExists) {
-      throw const AuthException(code: 409);
+      throw const CustomException(code: 409);
     }
 
     final id = _uuid.generate();
@@ -62,8 +62,8 @@ class AuthService {
   }
 }
 
-class AuthException implements Exception {
-  const AuthException({required this.code});
+class CustomException implements Exception {
+  const CustomException({required this.code});
 
   final int code;
 }

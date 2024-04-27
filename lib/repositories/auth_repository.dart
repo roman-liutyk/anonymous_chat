@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 // import 'package:dio/dio.dart';
@@ -15,15 +16,18 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      final uri = Uri.parse('http://localhost:8080/auth/sign_in');
+      final uri = Uri.http(
+        '10.0.2.2:8080',
+        '/auth/sign_in',
+      );
       // final uri = Uri.http('localhost:8080', '/auth/sign_in');
 
       final Response response = await Client().post(
         uri,
-        // body: {
-        //   'email': 'email@domain.com',
-        //   'password': '12345678',
-        // },
+        body: jsonEncode({
+          "email": "email@domain.com",
+          "password": "12345678",
+        }),
       );
 
       log(response.body);
