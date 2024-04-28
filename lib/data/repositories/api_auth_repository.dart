@@ -162,7 +162,7 @@ class ApiAuthRepository implements AuthRepository {
       final Response response = await _client.post(uri);
 
       switch (response.statusCode) {
-        case 200:
+        case 201:
           final UserAuthResponse userAuthResponse = UserAuthResponse.fromJson(
             jsonDecode(response.body),
           );

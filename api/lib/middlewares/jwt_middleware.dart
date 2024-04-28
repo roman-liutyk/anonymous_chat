@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:api/errors/custom_exception.dart';
 import 'package:api/models/jwt_payload/jwt_payload_model.dart';
 import 'package:api/models/user/user_model.dart';
-import 'package:api/services/auth_service.dart';
 import 'package:api/services/user_service.dart';
 import 'package:api/utils/jwt_helper.dart';
 import 'package:dart_frog/dart_frog.dart';

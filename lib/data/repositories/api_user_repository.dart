@@ -46,7 +46,7 @@ class ApiUserRepository implements UserRepository {
       );
 
       switch (response.statusCode) {
-        case 200:
+        case 201:
           final UserModel userModel = UserModel.fromJson(
             jsonDecode(response.body),
           );
