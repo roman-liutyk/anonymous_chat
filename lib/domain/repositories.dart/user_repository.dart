@@ -6,7 +6,7 @@ abstract class UserRepository {
   
   Future<User> getCurrentUser();
   
-  Future<void> updateUserData({
+  Future<User> updateUserData({
     required String username,
     required String email,
   });

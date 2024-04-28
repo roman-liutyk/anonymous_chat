@@ -26,6 +26,7 @@ void setupDependencies() {
   getIt.registerLazySingleton<UserRepository>(
     () => ApiUserRepository(
       client: getIt.get(),
+      secureStorage: getIt.get(),
     ),
   );
 }

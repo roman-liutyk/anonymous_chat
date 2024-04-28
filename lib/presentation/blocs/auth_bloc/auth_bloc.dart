@@ -1,5 +1,5 @@
 import 'package:anonymous_chat/core/erorrs/auth_exception.dart';
-import 'package:anonymous_chat/domain/entities/user_auth_response.dart';
+import 'package:anonymous_chat/core/erorrs/user_exception.dart';
 import 'package:anonymous_chat/domain/repositories.dart/auth_repository.dart';
 import 'package:anonymous_chat/domain/repositories.dart/user_repository.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_event.dart';
@@ -45,12 +45,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     try {
-      final UserAuthResponse userAuthResponse = await _authRepository.signIn(
+      final bool isSuccessful = await _authRepository.signIn(
         email: event.email,
         password: event.password,
       );
 
-      emit(const AuthStateAuthorized());
+      if (isSuccessful) {
+        emit(const AuthStateAuthorized());
+      }
     } on AuthException catch (authException) {
       emit(AuthStateUnauthorized(exception: authException));
     } catch (exception) {
@@ -63,12 +65,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     try {
-      final UserAuthResponse userAuthResponse = await _authRepository.signUp(
+      // TODO add email verification
+
+      final bool isSuccessful = await _authRepository.signUp(
         email: event.email,
         password: event.password,
       );
 
-      emit(const AuthStateAuthorized());
+      if (isSuccessful) {
+        emit(const AuthStateAuthorized());
+      }
     } on AuthException catch (authException) {
       emit(AuthStateUnauthorized(exception: authException));
     } catch (exception) {
@@ -89,8 +95,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEventDeleteAccount event,
     Emitter<AuthState> emit,
   ) async {
-    await _authRepository.deleteAccount();
-    _userRepository.clearCurrentUser();
-    emit(const AuthStateUnauthorized());
+    try {
+      final bool isSuccessful = await _authRepository.deleteAccount(
+        password: event.password,
+      );
+
+      if (isSuccessful) {
+        _userRepository.clearCurrentUser();
+        emit(const AuthStateUnauthorized());
+      }
+    } on AuthException catch (authException) {
+      emit(AuthStateUnauthorized(exception: authException));
+    } on UserException catch (userException) {
+      emit(AuthStateUnauthorized(exception: userException));
+    } catch (exception) {
+      emit(const AuthStateUnauthorized());
+    }
   }
 }

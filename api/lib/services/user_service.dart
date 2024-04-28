@@ -17,12 +17,16 @@ class UserService {
     }
   }
 
-  Future<void> updateUserById(
+  Future<UserModel> updateUserById(
     String id,
     Map<String, dynamic> map,
   ) async {
     try {
       await _firestore.collection('users').document(id).update(map);
+      
+      final doc = await _firestore.collection('users').document(id).get();
+
+      return UserModel.fromJson(doc.map);
     } catch (e) {
       throw const CustomException(code: 403);
     }

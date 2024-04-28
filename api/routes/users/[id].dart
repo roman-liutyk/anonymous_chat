@@ -53,9 +53,12 @@ Future<Response> _onPatch(RequestContext context, String id) async {
     final request = context.request;
     final body = await request.json() as Map<String, dynamic>;
 
-    await context.read<UserService>().updateUserById(id, body);
+    final updatedUser = await context.read<UserService>().updateUserById(id, body);
 
-    return Response(statusCode: 200);
+    return Response.json(
+      statusCode: 200,
+      body: updatedUser.toJson(),
+    );
   } on CustomException catch (e) {
     return Response(statusCode: e.code);
   } catch (e) {
@@ -74,14 +77,13 @@ Future<Response> _onDelete(RequestContext context, String id) async {
     final request = context.request;
     final body = await request.json() as Map<String, dynamic>;
 
-    final email = body['email'] as String?;
     final password = body['password'] as String?;
 
-    if (email == null || password == null) {
+    if (password == null) {
       return Response(statusCode: 400);
     }
 
-    if (user.password != password.encrypt || email != user.email) {
+    if (user.password != password.encrypt) {
       return Response(statusCode: 403);
     }
 

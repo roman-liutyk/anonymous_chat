@@ -1,4 +1,5 @@
-import 'package:anonymous_chat/core/erorrs/auth_exception.dart';
+
+import 'package:anonymous_chat/core/erorrs/custom_exception.dart';
 
 class AuthState {
   const AuthState();
@@ -9,7 +10,7 @@ class AuthStateAuthorized extends AuthState {
     this.exception,
   });
   
-  final AuthException? exception;
+  final CustomException? exception;
 }
 
 class AuthStateUnauthorized extends AuthState {
@@ -17,5 +18,5 @@ class AuthStateUnauthorized extends AuthState {
     this.exception,
   });
 
-  final AuthException? exception;
+  final CustomException? exception;
 }

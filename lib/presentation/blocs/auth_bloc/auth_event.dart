@@ -31,5 +31,9 @@ class AuthEventSignOut extends AuthEvent {
 }
 
 class AuthEventDeleteAccount extends AuthEvent {
-  const AuthEventDeleteAccount();
+  const AuthEventDeleteAccount({
+    required this.password,
+  });
+  
+  final String password;
 }

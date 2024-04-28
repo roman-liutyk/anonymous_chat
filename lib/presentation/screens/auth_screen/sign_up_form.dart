@@ -2,6 +2,7 @@ import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_event.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_text_form_field.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,8 +58,8 @@ class _SignUpFormState extends State<SignUpForm> {
             controller: _emailTextFormController,
             hintText: 'Email',
             validator: (value) {
-              if (value == null || value.trim().isEmpty) {
-                return 'Please enter valid email';
+              if (value == null || value.trim().isEmpty || !EmailValidator.validate(value)) {
+                return 'Please enter a valid email';
               }
 
               return null;
@@ -71,7 +72,7 @@ class _SignUpFormState extends State<SignUpForm> {
             hintText: 'Password',
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Please enter valid password';
+                return 'Please enter a valid password';
               }
 
               return null;

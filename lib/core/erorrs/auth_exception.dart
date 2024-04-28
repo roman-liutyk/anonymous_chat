@@ -1,11 +1,10 @@
-class AuthException {
-  AuthException({
-    this.title = 'Auth exception',
-    this.text = 'Something happened',
-  });
+import 'package:anonymous_chat/core/erorrs/custom_exception.dart';
 
-  final String title;
-  final String text;
+class AuthException extends CustomException {
+  AuthException({
+    super.title = 'Auth exception',
+    super.text = 'Something happened',
+  });
 }
 
 class AuthExceptionWrongPassword extends AuthException {
@@ -29,5 +28,21 @@ class AuthExceptionUserAlreadyExists extends AuthException {
       : super(
           title: 'User alreast exists',
           text: 'User with such email alreast exists!',
+        );
+}
+
+class AuthExceptionAccountDeleting extends AuthException {
+  AuthExceptionAccountDeleting()
+      : super(
+          title: 'Account deleting exception',
+          text: 'Something happened while deleting user data.',
+        );
+}
+
+class AuthExceptionAccountDeletingWithWrongCredentials extends AuthException {
+  AuthExceptionAccountDeletingWithWrongCredentials()
+      : super(
+          title: 'Wrong password',
+          text: 'You can not delete account with wrong password!',
         );
 }

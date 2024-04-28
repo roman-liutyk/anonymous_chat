@@ -25,19 +25,27 @@ class _MainScreenState extends State<MainScreen> {
         child: _pages.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue[400],
+        iconSize: 30,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Icon(Icons.home),
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Icon(Icons.settings),
+            ),
             label: 'Accout',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey[400],
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withOpacity(0.5),
         onTap: (int index) {
           setState(() {
             _selectedIndex = index;
