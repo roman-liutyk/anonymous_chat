@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:anonymous_chat/core/services/secure_storage_service.dart';
 import 'package:anonymous_chat/data/models/message_model.dart';
-import 'package:anonymous_chat/domain/repositories.dart/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -11,7 +10,9 @@ part 'chat_event.dart';
 part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  ChatBloc(this._storage, this._userRepository) : super(const ChatInitial()) {
+  ChatBloc(
+    this._storage,
+  ) : super(const ChatInitial()) {
     on<InitEvent>(_init);
     on<AddMessageEvent>(_addMessage);
     on<UpdateListEvent>(_updateList);
@@ -19,7 +20,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   final SecureSotrageService _storage;
-  final UserRepository _userRepository;
   final List<MessageModel> _messages = [];
 
   IOWebSocketChannel? _channel;
@@ -48,7 +48,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     _channel?.stream.listen(
       (event) {
-        print(event);
         final model = MessageModel.fromJson(jsonDecode(event));
 
         _messages.add(model);

@@ -29,7 +29,6 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => ChatBloc(
             getIt.get(),
-            getIt.get(),
           ),
         ),
       ],
