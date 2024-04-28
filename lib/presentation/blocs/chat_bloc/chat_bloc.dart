@@ -22,6 +22,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   final SecureSotrageService _storage;
   final List<MessageModel> _messages = [];
+  DateTime? _initTime;
 
   IOWebSocketChannel? _channel;
 
@@ -30,6 +31,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     Emitter<ChatState> emit,
   ) async {
     emit(const ChatLoading());
+    _initTime = DateTime.now();
 
     final token = await _storage.getUserToken();
 
@@ -51,9 +53,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       (event) {
         final model = MessageModel.fromJson(jsonDecode(event));
 
-        _messages.add(model);
+        _initTime ??= DateTime.now();
 
-        add(const UpdateListEvent());
+        if (model.createdAt.isAfter(_initTime!)) {
+          _messages.add(model);
+
+          add(const UpdateListEvent());
+        }
       },
     );
   }
@@ -82,5 +88,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ) async {
     _channel?.sink.close();
     _messages.clear();
+    _initTime = null;
+  }
+
+  @override
+  Future<void> close() async {
+    await _channel?.sink.close();
+    _messages.clear();
+    _initTime = null;
+    return super.close();
   }
 }
