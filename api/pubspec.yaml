@@ -7,9 +7,11 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
+  broadcast_bloc: ^0.1.0-dev.2
   crypto: ^3.0.3
   dart_frog: ^1.0.0
   dart_frog_auth: ^1.1.0
+  dart_frog_web_socket: ^1.0.0
   dart_jsonwebtoken: ^2.14.0
   firedart: ^0.9.8
   username_gen: ^1.0.4
@@ -19,4 +21,3 @@ dev_dependencies:
   build_runner: ^2.4.9
   mocktail: ^1.0.0
   test: ^1.19.2
-  very_good_analysis: ^5.1.0
