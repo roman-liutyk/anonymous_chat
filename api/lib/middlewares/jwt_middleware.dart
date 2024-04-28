@@ -7,6 +7,19 @@ import 'package:api/services/user_service.dart';
 import 'package:api/utils/jwt_helper.dart';
 import 'package:dart_frog/dart_frog.dart';
 
+/// Verifies JWT token retrieved from `headers` of every request handled under of
+/// this `middleware`.
+///
+/// If token is empty it returns response with `401` status
+/// code.
+///
+/// If token is present in `headers`, the [JwtPayloadModel] is retrieved
+/// from [JwtHelper.verifyJWT] helper method.
+///
+/// Then the user existence is checked and [UserModel] added to ther provider
+/// so we can access the user inside our `routes`.
+///
+/// Catches [CustomException] and returns [Response] with certain status code.
 Handler JWTMiddleware(Handler handler) {
   return (context) async {
     try {
