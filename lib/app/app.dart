@@ -33,6 +33,7 @@ class App extends StatelessWidget {
         ),
       ],
       child: const MaterialApp(
+        title: 'Anonymous Chat',
         debugShowCheckedModeBanner: false,
         home: RootScreensWrapper(),
       ),

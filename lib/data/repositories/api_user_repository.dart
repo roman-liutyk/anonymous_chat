@@ -67,10 +67,8 @@ class ApiUserRepository implements UserRepository {
   }
 
   @override
-  Future<User> updateUserData({
-    required String username,
-    required String email,
-  }) async {
+  Future<User> updateUserData(
+      {required Map<String, String> valuesToUpdate}) async {
     try {
       final id = await _secureStorage.getUserId();
       final token = await _secureStorage.getUserToken();
@@ -83,10 +81,7 @@ class ApiUserRepository implements UserRepository {
       final Response response = await _client.patch(
         headers: {'authorization': token ?? ''},
         uri,
-        body: jsonEncode({
-          'username': username,
-          'email': email,
-        }),
+        body: jsonEncode(valuesToUpdate),
       );
 
       switch (response.statusCode) {

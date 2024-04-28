@@ -22,6 +22,12 @@
             "flutterMode": "release"
         },
         {
+            "name": "anonymous_chat (debug mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug"
+        },
+        {
             "name": "api",
             "cwd": "api",
             "request": "launch",

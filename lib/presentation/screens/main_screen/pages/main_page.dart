@@ -13,7 +13,6 @@ class MainPage extends StatelessWidget {
       child: Center(
         child: CustomButton(
           onPressed: () {
-            // TODO search room
             context.read<ChatBloc>().add(const InitEvent());
 
             Navigator.of(context).push(

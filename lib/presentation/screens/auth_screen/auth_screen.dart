@@ -1,7 +1,7 @@
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_state.dart';
-import 'package:anonymous_chat/presentation/screens/auth_screen/sign_in_form.dart';
-import 'package:anonymous_chat/presentation/screens/auth_screen/sign_up_form.dart';
+import 'package:anonymous_chat/presentation/screens/auth_screen/widgets/sign_in_form.dart';
+import 'package:anonymous_chat/presentation/screens/auth_screen/widgets/sign_up_form.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_error_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

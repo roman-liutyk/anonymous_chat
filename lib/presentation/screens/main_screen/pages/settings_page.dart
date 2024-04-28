@@ -1,11 +1,13 @@
 import 'package:anonymous_chat/core/erorrs/auth_exception.dart';
+import 'package:anonymous_chat/domain/entities/user/user.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_event.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_state.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_state.dart';
-import 'package:anonymous_chat/presentation/screens/main_screen/pages/delete_account_bottom_sheet.dart';
-import 'package:anonymous_chat/presentation/screens/main_screen/pages/settings_page_account_form.dart';
+import 'package:anonymous_chat/presentation/screens/main_screen/pages/widgets/delete_account_bottom_sheet.dart';
+import 'package:anonymous_chat/presentation/screens/main_screen/pages/widgets/settings_page_account_form.dart';
+import 'package:anonymous_chat/presentation/widgets/bottom_sheet_controller.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_error_snackbar.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,7 @@ class SettingsPage extends StatelessWidget {
               if (authState is AuthStateAuthorized &&
                   authState.exception != null &&
                   authState.exception
-                      is! AuthExceptionAccountDeletingWithWrongCredentials) {
+                      is! AuthExceptionAccountDeletingWithWrongPassword) {
                 showCustomScnackbar(
                   context: context,
                   text: authState.exception!.text,
@@ -71,22 +73,29 @@ class SettingsPage extends StatelessWidget {
               const SizedBox(height: 30),
               const SettingsPageAccountForm(),
               const Spacer(),
-              CustomButton(
-                onPressed: () {
-                  BlocProvider.of<AuthBloc>(context).add(
-                    const AuthEventSignOut(),
-                  );
+              BlocBuilder<UserBloc, UserState>(
+                builder: (context, userState) {
+                  if (userState.user?.authMethod != AuthMethod.guest) {
+                    return CustomButton(
+                      onPressed: () {
+                        BlocProvider.of<AuthBloc>(context).add(
+                          const AuthEventSignOut(),
+                        );
+                      },
+                      text: 'Sign Out',
+                      backgroundColor: Colors.blue,
+                    );
+                  }
+
+                  return const SizedBox.shrink();
                 },
-                text: 'Sign Out',
-                backgroundColor: Colors.blue,
               ),
               const SizedBox(height: 20),
               CustomButton(
                 onPressed: () {
-                  showModalBottomSheet(
+                  BottomSheetController.showBottomSheet(
                     context: context,
-                    isScrollControlled: true,
-                    builder: (context) => const DeleteAccountBottomSheet(),
+                    widget: const DeleteAccountBottomSheet(),
                   );
                 },
                 text: 'Delete account',

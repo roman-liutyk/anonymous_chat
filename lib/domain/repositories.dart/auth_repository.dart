@@ -11,9 +11,17 @@ abstract class AuthRepository {
     required String password,
   });
 
+  Future<bool> signUpAsGuest();
+
+  Future<bool> signInWithGoogle({
+    required String email,
+  });
+
   Future<void> signOut();
 
   Future<bool> deleteAccount({
-    required String password,
+    required String authMethod,
+    required String? email,
+    required String? password,
   });
 }

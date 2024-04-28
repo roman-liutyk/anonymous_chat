@@ -35,9 +35,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     Emitter<UserState> emit,
   ) async {
     try {
+      final Map<String, String> valuesToUpdate = <String, String>{};
+
+      if (event.email != null) {
+        valuesToUpdate['email'] = event.email!;
+      }
+      if (event.username != null) {
+        valuesToUpdate['username'] = event.username!;
+      }
+
       final User user = await _userRepository.updateUserData(
-        username: event.username,
-        email: event.email,
+        valuesToUpdate: valuesToUpdate,
       );
 
       emit(UserStateUpdated(user: user));
@@ -53,7 +61,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       ));
     }
   }
-  
+
   Future<void> _clearState(
     UserEventClearState event,
     Emitter<UserState> emit,

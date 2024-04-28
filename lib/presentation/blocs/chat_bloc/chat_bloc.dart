@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:anonymous_chat/core/app_constants.dart';
 import 'package:anonymous_chat/core/services/secure_storage_service.dart';
 import 'package:anonymous_chat/data/models/message_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     final token = await _storage.getUserToken();
 
-    final uri = Uri.parse('ws://10.0.2.2:8080/chat/ws');
+    final uri = Uri.parse('ws://${AppConstants.host}/chat/ws');
     final channel = IOWebSocketChannel.connect(
       uri,
       headers: {
