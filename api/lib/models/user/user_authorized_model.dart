@@ -1,5 +1,8 @@
 import 'package:api/models/user/user_model.dart';
 
+/// Abstract model of the authorized user.
+///
+/// Extends [UserModel].
 abstract class UserAuthorizedModel extends UserModel {
   const UserAuthorizedModel({
     required String id,
@@ -12,5 +15,6 @@ abstract class UserAuthorizedModel extends UserModel {
           authMethod: authMethod,
         );
 
+  /// `email` - field for the user email [String].
   final String email;
 }

@@ -7,7 +7,13 @@ import 'package:api/models/user/user_authorized_model.dart';
 import 'package:api/models/user/user_model.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
+/// Contains methods for `signing` and `verifying` JWT token.
 class JwtHelper {
+  /// Recieves [UserModel] as a method parameter and creates [JWT] instances
+  /// with `user` info in payload.
+  ///
+  /// Then, signs the token using [JWT.sign] method and passes the [SecretKey]
+  /// with the `SECRET_KEY` that is stored inside the env file.
   static String signJWT(UserModel user) {
     final JWT jwt;
 
@@ -33,6 +39,15 @@ class JwtHelper {
     return token;
   }
 
+  /// Recieves JWT token in method parameter and uses [JWT.verify] for token
+  /// verfication.
+  ///
+  /// It return decrypted JSON payload, that we write as a
+  /// [JwtPayloadAuthorizedModel] or [JwtPayloadGuestModel] depending on `email`
+  /// presence.
+  ///
+  /// As a result, returns [JwtPayloadAuthorizedModel] or [JwtPayloadGuestModel]
+  /// model.
   static JwtPayloadModel verifyJWT(String token) {
     final payload = JWT.verify(
       token,

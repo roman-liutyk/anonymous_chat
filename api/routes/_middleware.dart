@@ -7,6 +7,10 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:firedart/firedart.dart';
 import 'package:uuid/v4.dart';
 
+/// Responsible for initializing [Firestore] if it is not already initialized.
+///
+/// Creates [provider] methods to make [AuthService], [UserService] and
+/// [ChatService] accessible in our routes handlers.
 Handler middleware(Handler handler) {
   if (!Firestore.initialized) {
     Firestore.initialize(Platform.environment['PROJECT_ID'] ?? '');
