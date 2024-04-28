@@ -1,4 +1,6 @@
 import 'package:api/models/user/user_basic_model.dart';
+import 'package:api/models/user/user_google_model.dart';
+import 'package:api/models/user/user_quest_model.dart';
 import 'package:firedart/firedart.dart';
 import 'package:username_gen/username_gen.dart';
 import 'package:uuid/v4.dart';
@@ -50,6 +52,54 @@ class AuthService {
       username: username,
       email: email,
       password: password.encrypt,
+    );
+
+    final doc = users.document(id);
+
+    await doc.set(
+      user.toJson(),
+    );
+
+    return user;
+  }
+
+  Future<UserGuestModel> signUpGuest() async {
+    final users = _firestore.collection('users');
+
+    final id = _uuid.generate();
+    final username = UsernameGen().generate();
+
+    final user = UserGuestModel(
+      id: id,
+      username: username,
+    );
+
+    final doc = users.document(id);
+
+    await doc.set(
+      user.toJson(),
+    );
+
+    return user;
+  }
+
+  Future<UserGoogleModel> signInGoogle(String email) async {
+    final users = _firestore.collection('users');
+    final docs = await users.where('email', isEqualTo: email).get();
+
+    final UserGoogleModel user;
+
+    if (docs.isNotEmpty) {
+      return UserGoogleModel.fromJson(docs.first.map);
+    }
+
+    final id = _uuid.generate();
+    final username = UsernameGen().generate();
+
+    user = UserGoogleModel(
+      id: id,
+      username: username,
+      email: email
     );
 
     final doc = users.document(id);
