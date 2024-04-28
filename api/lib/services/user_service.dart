@@ -1,6 +1,7 @@
 import 'package:api/models/user/user_basic_model.dart';
 import 'package:api/models/user/user_google_model.dart';
 import 'package:api/models/user/user_model.dart';
+import 'package:api/models/user/user_quest_model.dart';
 import 'package:api/services/auth_service.dart';
 import 'package:firedart/firedart.dart';
 
@@ -53,7 +54,7 @@ class UserService {
         user = UserGoogleModel.fromJson(json);
         break;
       case AuthMethod.guest:
-        user = UserGoogleModel.fromJson(json);
+        user = UserGuestModel.fromJson(json);
         break;
     }
 
