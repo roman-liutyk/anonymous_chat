@@ -1,3 +1,4 @@
+import 'package:anonymous_chat/core/erorrs/auth_exception.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_event.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_state.dart';
@@ -22,10 +23,20 @@ class SettingsPage extends StatelessWidget {
             listener: (context, userState) {
               if (userState is UserStateInitialized &&
                   userState.exception != null) {
-                showCustomErrorScnackbar(
+                showCustomScnackbar(
                   context: context,
                   text: userState.exception!.text,
                   title: userState.exception!.title,
+                  isError: true,
+                );
+              }
+
+              if (userState is UserStateUpdated) {
+                showCustomScnackbar(
+                  context: context,
+                  text: 'You have updated your account data!',
+                  title: 'Saved',
+                  isError: false,
                 );
               }
             },
@@ -33,11 +44,14 @@ class SettingsPage extends StatelessWidget {
           BlocListener<AuthBloc, AuthState>(
             listener: (context, authState) {
               if (authState is AuthStateAuthorized &&
-                  authState.exception != null) {
-                showCustomErrorScnackbar(
+                  authState.exception != null &&
+                  authState.exception
+                      is! AuthExceptionAccountDeletingWithWrongCredentials) {
+                showCustomScnackbar(
                   context: context,
                   text: authState.exception!.text,
                   title: authState.exception!.title,
+                  isError: true,
                 );
               }
             },

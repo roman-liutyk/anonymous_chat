@@ -1,6 +1,7 @@
 import 'package:anonymous_chat/core/di/locator.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/auth_bloc/auth_event.dart';
+import 'package:anonymous_chat/presentation/blocs/chat_bloc/chat_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_event.dart';
 import 'package:anonymous_chat/presentation/screens/root_screens_wrapper.dart';
@@ -25,11 +26,15 @@ class App extends StatelessWidget {
             userRepository: getIt.get(),
           )..add(const UserEventInitialize()),
         ),
+        BlocProvider(
+          create: (context) => ChatBloc(
+            getIt.get(),
+          ),
+        ),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: RootScreensWrapper(),
-        
       ),
     );
   }

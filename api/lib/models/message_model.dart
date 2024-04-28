@@ -11,9 +11,9 @@ class MessageModel {
   final String id;
   final String chatId;
   final String senderId;
+  final String senderUsername;
   final int createdAt;
   final String content;
-  final String senderUsername;
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
@@ -31,7 +31,7 @@ class MessageModel {
       'id': id,
       'chatId': chatId,
       'senderId': senderId,
-      'createdAt': createdAt.toString(),
+      'createdAt': createdAt,
       'content': content,
       'senderUsername': senderUsername,
     };
