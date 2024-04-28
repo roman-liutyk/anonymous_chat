@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:anonymous_chat/core/app_constants.dart';
 import 'package:anonymous_chat/core/erorrs/user_exception.dart';
 import 'package:anonymous_chat/core/services/secure_storage_service.dart';
-import 'package:anonymous_chat/data/models/user_model.dart';
-import 'package:anonymous_chat/domain/entities/user.dart';
+import 'package:anonymous_chat/data/models/user/user_model.dart';
+import 'package:anonymous_chat/domain/entities/user/user.dart';
 import 'package:anonymous_chat/domain/repositories.dart/user_repository.dart';
 import 'package:http/http.dart';
 

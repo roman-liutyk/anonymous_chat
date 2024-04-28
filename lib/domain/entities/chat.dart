@@ -1,5 +1,5 @@
 import 'package:anonymous_chat/domain/entities/message.dart';
-import 'package:anonymous_chat/domain/entities/user.dart';
+import 'package:anonymous_chat/domain/entities/user/user.dart';
 
 class Chat {
   const Chat({

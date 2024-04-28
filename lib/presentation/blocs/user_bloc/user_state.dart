@@ -1,5 +1,5 @@
 import 'package:anonymous_chat/core/erorrs/custom_exception.dart';
-import 'package:anonymous_chat/domain/entities/user.dart';
+import 'package:anonymous_chat/domain/entities/user/user.dart';
 
 class UserState {
   const UserState({

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-void showCustomErrorScnackbar({
+void showCustomScnackbar({
   required BuildContext context,
   required String title,
   required String text,
+  required bool isError,
 }) {
+  ScaffoldMessenger.of(context).hideCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: Colors.red[900],
+      backgroundColor: isError ? Colors.red[900] : Colors.green[700],
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

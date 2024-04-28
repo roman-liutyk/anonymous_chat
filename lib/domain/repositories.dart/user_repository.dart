@@ -1,4 +1,4 @@
-import 'package:anonymous_chat/domain/entities/user.dart';
+import 'package:anonymous_chat/domain/entities/user/user.dart';
 
 abstract class UserRepository {
 

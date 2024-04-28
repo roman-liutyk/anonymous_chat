@@ -1,5 +1,5 @@
 import 'package:anonymous_chat/core/erorrs/user_exception.dart';
-import 'package:anonymous_chat/domain/entities/user.dart';
+import 'package:anonymous_chat/domain/entities/user/user.dart';
 import 'package:anonymous_chat/domain/repositories.dart/user_repository.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_event.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_state.dart';
