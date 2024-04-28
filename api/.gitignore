@@ -17,4 +17,5 @@ build/
 # Test related files
 coverage/
 
-lib/env.dart
+.env
+lib/env/*

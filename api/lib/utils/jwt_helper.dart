@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:api/env/env.dart';
 import 'package:api/models/jwt_payload/jwt_payload_authorized_model.dart';
 import 'package:api/models/jwt_payload/jwt_payload_guest_model.dart';
 import 'package:api/models/jwt_payload/jwt_payload_model.dart';
@@ -25,9 +24,7 @@ class JwtHelper {
     }
 
     final token = jwt.sign(
-      SecretKey(
-        Platform.environment['SECRET_KEY'] ?? '',
-      ),
+      SecretKey(Env.SECRET_KEY),
     );
 
     return token;
@@ -36,9 +33,7 @@ class JwtHelper {
   static JwtPayloadModel verifyJWT(String token) {
     final payload = JWT.verify(
       token,
-      SecretKey(
-        Platform.environment['SECRET_KEY'] ?? '',
-      ),
+      SecretKey(Env.SECRET_KEY),
     );
 
     final payloadData = payload.payload as Map<String, dynamic>;
