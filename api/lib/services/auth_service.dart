@@ -60,6 +60,14 @@ class AuthService {
 
     return user;
   }
+
+  Future<void> deleteUserById(String id) async {
+    try {
+      await _firestore.collection('users').document(id).delete();
+    } catch (e) {
+      throw const CustomException(code: 404);
+    }
+  }
 }
 
 class CustomException implements Exception {
