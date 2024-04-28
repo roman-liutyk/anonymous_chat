@@ -1,5 +1,5 @@
 import 'package:anonymous_chat/data/models/message_model.dart';
-import 'package:anonymous_chat/data/models/user_model.dart';
+import 'package:anonymous_chat/data/models/user/user_model.dart';
 import 'package:anonymous_chat/domain/entities/chat.dart';
 
 class ChatModel {

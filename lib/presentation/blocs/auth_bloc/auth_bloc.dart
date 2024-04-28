@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anonymous_chat/core/erorrs/auth_exception.dart';
 import 'package:anonymous_chat/core/erorrs/user_exception.dart';
 import 'package:anonymous_chat/domain/repositories.dart/auth_repository.dart';
@@ -105,11 +107,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(const AuthStateUnauthorized());
       }
     } on AuthException catch (authException) {
-      emit(AuthStateUnauthorized(exception: authException));
+      log('1 $authException');
+      emit(AuthStateAuthorized(exception: authException));
     } on UserException catch (userException) {
-      emit(AuthStateUnauthorized(exception: userException));
+      log('2 $userException');
+      emit(AuthStateAuthorized(exception: userException));
     } catch (exception) {
-      emit(const AuthStateUnauthorized());
+      log('3 $exception');
+      emit(const AuthStateAuthorized());
     }
   }
 }

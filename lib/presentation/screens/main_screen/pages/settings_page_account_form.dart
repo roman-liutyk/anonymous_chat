@@ -1,4 +1,7 @@
-import 'package:anonymous_chat/domain/entities/user.dart';
+import 'package:anonymous_chat/domain/entities/user/user.dart';
+import 'package:anonymous_chat/domain/entities/user/user_basic.dart';
+import 'package:anonymous_chat/domain/entities/user/user_google.dart';
+import 'package:anonymous_chat/domain/entities/user/user_guest.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_event.dart';
 import 'package:anonymous_chat/presentation/widgets/custom_button.dart';
@@ -20,14 +23,26 @@ class _SettingsPageAccountFormState extends State<SettingsPageAccountForm> {
   final _usernameTextFormController = TextEditingController();
   final _emailTextFormController = TextEditingController();
 
+  bool canEditAccountData = false;
+  bool displayEmail = false;
+
   @override
   void initState() {
     final User? user = BlocProvider.of<UserBloc>(context).state.user;
 
-    if (user != null) {
+    if (user is UserBasic) {
       _usernameTextFormController.text = user.username;
       _emailTextFormController.text = user.email;
+
+      canEditAccountData = true;
+      displayEmail = true;
+    } else if (user != null && (user is UserGoogle || user is UserGuest)) {
+      _usernameTextFormController.text = user.username;
+
+      canEditAccountData = false;
+      displayEmail = false;
     }
+
     super.initState();
   }
 
@@ -41,6 +56,7 @@ class _SettingsPageAccountFormState extends State<SettingsPageAccountForm> {
           CustomTextFormField(
             controller: _usernameTextFormController,
             hintText: 'Username',
+            readOnly: !canEditAccountData,
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
                 return 'Please enter a valid username';
@@ -50,18 +66,23 @@ class _SettingsPageAccountFormState extends State<SettingsPageAccountForm> {
             },
           ),
           const SizedBox(height: 20),
-          CustomTextFormField(
-            controller: _emailTextFormController,
-            hintText: 'Email',
-            validator: (value) {
-              if (value == null || value.trim().isEmpty || !EmailValidator.validate(value)) {
-                return 'Please enter a valid email';
-              }
+          !displayEmail
+              ? const SizedBox.shrink()
+              : CustomTextFormField(
+                  controller: _emailTextFormController,
+                  hintText: 'Email',
+                  readOnly: !canEditAccountData,
+                  validator: (value) {
+                    if (value == null ||
+                        value.trim().isEmpty ||
+                        !EmailValidator.validate(value)) {
+                      return 'Please enter a valid email';
+                    }
 
-              return null;
-            },
-          ),
-          const SizedBox(height: 20),
+                    return null;
+                  },
+                ),
+          !displayEmail ? const SizedBox.shrink() : const SizedBox(height: 20),
           CustomButton(
             text: 'Save',
             onPressed: () {

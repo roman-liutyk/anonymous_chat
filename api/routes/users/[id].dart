@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:api/extensions/string_extensions.dart';
-import 'package:api/models/user_model.dart';
+import 'package:api/models/user/user_basic_model.dart';
+import 'package:api/models/user/user_model.dart';
 import 'package:api/services/auth_service.dart';
 import 'package:api/services/user_service.dart';
 import 'package:dart_frog/dart_frog.dart';
@@ -60,7 +61,7 @@ Future<Response> _onPatch(RequestContext context, String id) async {
       body: updatedUser.toJson(),
     );
   } on CustomException catch (e) {
-    return Response(statusCode: e.code);
+    return Response(statusCode: e.code); 
   } catch (e) {
     return Response(statusCode: 500);
   }
@@ -83,7 +84,7 @@ Future<Response> _onDelete(RequestContext context, String id) async {
       return Response(statusCode: 400);
     }
 
-    if (user.password != password.encrypt) {
+    if (user is UserBasicModel && user.password != password.encrypt) {
       return Response(statusCode: 403);
     }
 

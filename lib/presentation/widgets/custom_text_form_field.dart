@@ -7,11 +7,13 @@ class CustomTextFormField extends StatelessWidget {
     required this.hintText,
     this.validator,
     this.obscureText = false,
+    this.readOnly = false,
   });
 
   final TextEditingController? controller;
   final String hintText;
   final bool obscureText;
+  final bool readOnly;
   final String? Function(String?)? validator;
 
   @override
@@ -19,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
+      readOnly: readOnly,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(

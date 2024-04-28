@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:api/models/jwt_payload_model.dart';
-import 'package:api/models/user_model.dart';
+import 'package:api/models/jwt_payload/jwt_payload_model.dart';
+import 'package:api/models/user/user_model.dart';
 import 'package:api/services/auth_service.dart';
 import 'package:api/services/user_service.dart';
 import 'package:api/utils/jwt_helper.dart';
@@ -17,10 +17,6 @@ Handler JWTMiddleware(Handler handler) {
       if (token.isEmpty) throw const CustomException(code: 401);
 
       final JwtPayloadModel payload = JwtHelper.verifyJWT(token);
-
-      final userService = context.read<UserService>();
-
-      print(userService);
 
       final user = await context.read<UserService>().fetchUserById(payload.id);
 

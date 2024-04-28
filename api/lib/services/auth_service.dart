@@ -1,9 +1,9 @@
+import 'package:api/models/user/user_basic_model.dart';
 import 'package:firedart/firedart.dart';
 import 'package:username_gen/username_gen.dart';
 import 'package:uuid/v4.dart';
 
 import '../extensions/string_extensions.dart';
-import '../models/user_model.dart';
 
 class AuthService {
   const AuthService(
@@ -14,7 +14,7 @@ class AuthService {
   final Firestore _firestore;
   final UuidV4 _uuid;
 
-  Future<UserModel> signIn(String email, String password) async {
+  Future<UserBasicModel> signIn(String email, String password) async {
     final users = _firestore.collection('users');
 
     final docs = await users.where('email', isEqualTo: email).get();
@@ -23,7 +23,7 @@ class AuthService {
       throw const CustomException(code: 404);
     }
 
-    final user = UserModel.fromJson(docs.first.map);
+    final user = UserBasicModel.fromJson(docs.first.map);
 
     if (password.encrypt != user.password) {
       throw const CustomException(code: 401);
@@ -32,7 +32,7 @@ class AuthService {
     return user;
   }
 
-  Future<UserModel> signUp(String email, String password) async {
+  Future<UserBasicModel> signUp(String email, String password) async {
     final users = _firestore.collection('users');
 
     final userExists =
@@ -45,7 +45,7 @@ class AuthService {
     final id = _uuid.generate();
     final username = UsernameGen().generate();
 
-    final user = UserModel(
+    final user = UserBasicModel(
       id: id,
       username: username,
       email: email,

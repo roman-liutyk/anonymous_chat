@@ -28,17 +28,19 @@ class _AuthScreenState extends State<AuthScreen> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, authState) {
           if (authState is AuthStateAuthorized && authState.exception != null) {
-            showCustomErrorScnackbar(
+            showCustomScnackbar(
               context: context,
               text: authState.exception!.text,
               title: authState.exception!.title,
+              isError: true,
             );
           } else if (authState is AuthStateUnauthorized &&
               authState.exception != null) {
-            showCustomErrorScnackbar(
+            showCustomScnackbar(
               context: context,
               text: authState.exception!.text,
               title: authState.exception!.title,
+              isError: true,
             );
           }
         },
