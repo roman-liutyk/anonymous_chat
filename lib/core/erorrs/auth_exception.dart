@@ -26,8 +26,8 @@ class AuthExceptionUserDoesNotExist extends AuthException {
 class AuthExceptionUserAlreadyExists extends AuthException {
   AuthExceptionUserAlreadyExists()
       : super(
-          title: 'User alreast exists',
-          text: 'User with such email alreast exists!',
+          title: 'User already exists',
+          text: 'User with such email already exists!',
         );
 }
 
@@ -39,10 +39,34 @@ class AuthExceptionAccountDeleting extends AuthException {
         );
 }
 
-class AuthExceptionAccountDeletingWithWrongCredentials extends AuthException {
-  AuthExceptionAccountDeletingWithWrongCredentials()
+class AuthExceptionAccountDeletingWithWrongPassword extends AuthException {
+  AuthExceptionAccountDeletingWithWrongPassword()
       : super(
           title: 'Wrong password',
           text: 'You can not delete account with wrong password!',
+        );
+}
+
+class AuthExceptionDeletingWithoutProvidedCredentials extends AuthException {
+  AuthExceptionDeletingWithoutProvidedCredentials()
+      : super(
+          title: 'Account deleting failed',
+          text: 'You have to provide credentials to delete your account.',
+        );
+}
+
+class AuthExceptionGuestSigningIn extends AuthException {
+  AuthExceptionGuestSigningIn()
+      : super(
+          title: 'Guest signing in failed',
+          text: 'Something happened while signing in as guest.',
+        );
+}
+
+class AuthExceptionSigningInWithGoogle extends AuthException {
+  AuthExceptionSigningInWithGoogle()
+      : super(
+          title: 'Google signing in failed',
+          text: 'Something happened while signing in with Google.',
         );
 }

@@ -26,14 +26,22 @@ class AuthEventSignUp extends AuthEvent {
   final String password;
 }
 
+class AuthEventSignInWithGoogle extends AuthEvent {
+  const AuthEventSignInWithGoogle();
+}
+
+class AuthEventSignUpAsGuest extends AuthEvent {
+  const AuthEventSignUpAsGuest();
+}
+
 class AuthEventSignOut extends AuthEvent {
   const AuthEventSignOut();
 }
 
 class AuthEventDeleteAccount extends AuthEvent {
   const AuthEventDeleteAccount({
-    required this.password,
+    this.password,
   });
-  
-  final String password;
+
+  final String? password;
 }

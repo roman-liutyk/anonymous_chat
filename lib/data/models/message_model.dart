@@ -22,8 +22,8 @@ class MessageModel {
       id: json['id'] as String,
       chatId: json['chatId'] as String,
       senderId: json['senderId'] as String,
-      senderUsername: json['senderUserName'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      senderUsername: json['senderUsername'] as String,
+      createdAt: DateTime.fromMillisecondsSinceEpoch(json['createdAt'] as int),
       content: json['content'] as String,
     );
   }
@@ -33,8 +33,9 @@ class MessageModel {
       'id': id,
       'chatId': chatId,
       'senderId': senderId,
-      'createdAt': createdAt.toString(),
+      'createdAt': createdAt.millisecondsSinceEpoch,
       'content': content,
+      'senderUsername': senderUsername,
     };
   }
 

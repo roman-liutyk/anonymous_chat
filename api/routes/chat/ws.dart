@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:api/services/chat_service.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_frog_web_socket/dart_frog_web_socket.dart';
@@ -11,7 +13,7 @@ Future<Response> onRequest(RequestContext context) async {
         .collection('messages')
         .stream
         .listen((event) {
-      channel.sink.add(event.last.map);
+      channel.sink.add(jsonEncode(event.last.map));
     });
 
     channel.stream.listen(

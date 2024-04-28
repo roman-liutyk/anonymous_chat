@@ -18,7 +18,9 @@ Handler JWTMiddleware(Handler handler) {
 
       final JwtPayloadModel payload = JwtHelper.verifyJWT(token);
 
-      final user = await context.read<UserService>().fetchUserById(payload.id);
+      final userService = context.read<UserService>();
+
+      final user = await userService.fetchUserById(payload.id);
 
       final updatedContext = context.provide<UserModel>(() => user);
 

@@ -12,10 +12,10 @@ class UserEventClearState extends UserEvent {
 
 class UserEventUpdateData extends UserEvent {
   UserEventUpdateData({
-    required this.username,
-    required this.email,
+    this.username,
+    this.email,
   });
 
-  final String username;
-  final String email;
+  final String? username;
+  final String? email;
 }

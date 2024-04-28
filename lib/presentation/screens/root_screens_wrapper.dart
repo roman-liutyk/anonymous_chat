@@ -5,11 +5,17 @@ import 'package:anonymous_chat/presentation/blocs/user_bloc/user_event.dart';
 import 'package:anonymous_chat/presentation/blocs/user_bloc/user_state.dart';
 import 'package:anonymous_chat/presentation/screens/auth_screen/auth_screen.dart';
 import 'package:anonymous_chat/presentation/screens/main_screen/main_screen.dart';
+import 'package:anonymous_chat/presentation/widgets/bottom_sheet_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RootScreensWrapper extends StatelessWidget {
   const RootScreensWrapper({super.key});
+
+  bool isAnyBottomSheetOpen(BuildContext context) {
+    return ModalRoute.of(context)?.isCurrent == true &&
+        ModalRoute.of(context)?.settings.name == '/';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +30,8 @@ class RootScreensWrapper extends StatelessWidget {
         }
 
         BlocProvider.of<UserBloc>(context).add(const UserEventClearState());
+        BottomSheetController.hideBottomSheet(context: context);
+        
         return const AuthScreen();
       },
     );

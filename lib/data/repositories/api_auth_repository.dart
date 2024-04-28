@@ -116,8 +116,73 @@ class ApiAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<bool> signInWithGoogle({
+    required String email,
+  }) async {
+    try {
+      final uri = Uri.http(
+        AppConstants.host,
+        AppConstants.googleSignInPath,
+      );
+
+      final Response response = await _client.post(
+        uri,
+        body: jsonEncode({
+          "email": email,
+        }),
+      );
+
+      switch (response.statusCode) {
+        case 200:
+          final UserAuthResponse userAuthResponse = UserAuthResponse.fromJson(
+            jsonDecode(response.body),
+          );
+
+          await _secureStorage.setUserId(userId: userAuthResponse.id);
+          await _secureStorage.setUserToken(userToken: userAuthResponse.token);
+          return true;
+        case 401:
+          throw AuthExceptionSigningInWithGoogle();
+        default:
+          throw AuthExceptionSigningInWithGoogle();
+      }
+    } catch (exception) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> signUpAsGuest() async {
+    try {
+      final uri = Uri.http(
+        AppConstants.host,
+        AppConstants.guestSignUpPath,
+      );
+
+      final Response response = await _client.post(uri);
+
+      switch (response.statusCode) {
+        case 200:
+          final UserAuthResponse userAuthResponse = UserAuthResponse.fromJson(
+            jsonDecode(response.body),
+          );
+
+          await _secureStorage.setUserId(userId: userAuthResponse.id);
+          await _secureStorage.setUserToken(userToken: userAuthResponse.token);
+          return true;
+        default:
+          throw AuthExceptionGuestSigningIn();
+      }
+    } catch (exception) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<bool> deleteAccount({
-    required String password,
+    required String authMethod,
+    required String? email,
+    required String? password,
   }) async {
     try {
       final id = await _secureStorage.getUserId();
@@ -132,6 +197,8 @@ class ApiAuthRepository implements AuthRepository {
         headers: {'authorization': token ?? ''},
         uri,
         body: jsonEncode({
+          'authMethod': authMethod,
+          'email': email,
           'password': password,
         }),
       );
@@ -141,11 +208,11 @@ class ApiAuthRepository implements AuthRepository {
           await _secureStorage.clearAllData();
           return true;
         case 400:
-          throw AuthExceptionAccountDeletingWithWrongCredentials();
+          throw AuthExceptionDeletingWithoutProvidedCredentials();
         case 401:
           throw UserExceptionUnathorizedRequestToUserData();
         case 403:
-          throw AuthExceptionAccountDeletingWithWrongCredentials();
+          throw AuthExceptionAccountDeletingWithWrongPassword();
         default:
           throw AuthExceptionAccountDeleting();
       }
