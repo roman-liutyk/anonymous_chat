@@ -1,4 +1,5 @@
-import 'package:api/env.dart';
+import 'dart:io';
+
 import 'package:api/services/auth_service.dart';
 import 'package:api/services/chat_service.dart';
 import 'package:api/services/user_service.dart';
@@ -8,7 +9,7 @@ import 'package:uuid/v4.dart';
 
 Handler middleware(Handler handler) {
   if (!Firestore.initialized) {
-    Firestore.initialize(EnvVariables.projectId);
+    Firestore.initialize(Platform.environment['PROJECT_ID'] ?? '');
   }
 
   return handler

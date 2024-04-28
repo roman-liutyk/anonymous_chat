@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:anonymous_chat/core/app_constants.dart';
 import 'package:anonymous_chat/core/services/secure_storage_service.dart';
 import 'package:anonymous_chat/data/models/message_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,9 @@ part 'chat_event.dart';
 part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  ChatBloc(this._storage) : super(const ChatInitial()) {
+  ChatBloc(
+    this._storage,
+  ) : super(const ChatInitial()) {
     on<InitEvent>(_init);
     on<AddMessageEvent>(_addMessage);
     on<UpdateListEvent>(_updateList);
@@ -30,7 +33,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     final token = await _storage.getUserToken();
 
-    final uri = Uri.parse('ws://10.0.2.2:8080/chat/ws');
+    final uri = Uri.parse('ws://${AppConstants.host}/chat/ws');
     final channel = IOWebSocketChannel.connect(
       uri,
       headers: {
