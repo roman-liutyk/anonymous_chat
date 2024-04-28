@@ -8,8 +8,6 @@ class BottomSheetController {
     required Widget widget,
   }) {
     _isBottomSheetOpened = true;
-
-    // hideBottomSheet(context: context);
     
     showModalBottomSheet(
       context: context,

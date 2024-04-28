@@ -23,6 +23,9 @@ class CustomButton extends StatelessWidget {
       ),
       backgroundColor: MaterialStatePropertyAll(backgroundColor),
       shadowColor: MaterialStatePropertyAll(backgroundColor),
+      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      )),
     );
 
     final buttonText = Text(

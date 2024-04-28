@@ -277,7 +277,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     width: 45,
                                     height: 45,
                                     decoration: const BoxDecoration(
-                                      color: Color.fromARGB(255, 0, 89, 204),
+                                      color: Colors.blue,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(10),
                                       ),

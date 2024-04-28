@@ -30,6 +30,9 @@ class CustomOutlinedButton extends StatelessWidget {
       side: MaterialStatePropertyAll(
         BorderSide(color: borderColor, width: 1.5, style: BorderStyle.solid),
       ),
+      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      )),
     );
 
     final buttonText = Text(
