@@ -27,7 +27,7 @@ The App is a simple flutter app with a custom backend for authentication and cha
 - Add `.env` file within `api` folder and fill your data:
 
     ```bash
-        PROJECT_ID=anonymous-chat-hackathon
+        PROJECT_ID=YOUR_PROJECT_ID
         SECRET_KEY=USE_YOUR_KEY
     ```
     
